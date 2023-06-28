@@ -29,7 +29,7 @@
                     <div class="field">
                         <label class="label">CRM</label>
                         <div class="controls">
-                            <input type="text" class="input" name="CRM" autocomplete="off"/>
+                            <input type="text" class="input" name="CRM" autocomplete="off" placeholder="XX000000"/>
                         </div>
                     </div>
                     <div class="field">

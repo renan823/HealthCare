@@ -2,6 +2,7 @@ package br.ifsp.dsw3.model.utils;
 
 public class Validator {
     public static boolean phone(String phone) {
+        System.out.println(phone);
         if (phone == null) {
             return false;
         }
@@ -11,6 +12,7 @@ public class Validator {
     }
 
     public static boolean text(String text) {
+        System.out.println(text);
         if (text == null) {
             return false;
         }

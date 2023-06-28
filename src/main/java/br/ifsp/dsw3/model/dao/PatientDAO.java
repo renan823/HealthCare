@@ -11,7 +11,7 @@ public class PatientDAO {
     public void createTable() {
         String sql = 
             "CREATE TABLE IF NOT EXISTS patient(" +
-            "CPF char(11) PRIMARY KEY NOT NULL UNIQUE," +
+            "CPF char(14) PRIMARY KEY NOT NULL UNIQUE," +
             "name varchar(255) NOT NULL," +
             "sex char(1) NOT NULL," +
             "phone varchar(40) NOT NULL)";
@@ -104,5 +104,14 @@ public class PatientDAO {
             e.printStackTrace();
         }
         return patients;
+    }
+
+    public void ui() {
+        String sql = "DROP TABLE patient";
+        try (PreparedStatement stmt = Connections.createStatement(sql)) {
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
