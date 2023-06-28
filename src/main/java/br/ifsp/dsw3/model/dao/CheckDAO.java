@@ -16,15 +16,14 @@ public class CheckDAO {
     private DoctorDAO doctorDAO = new DoctorDAO();
 
     public void createTable() {
-        String sql = 
-            "CREATE TABLE IF NOT EXISTS checks(" +
-            "id integer PRIMARY KEY AUTOINCREMENT," +
-            "CPF char(14) NOT NULL," +
-            "CRM char(8) NOT NULL," +
-            "date datetime NOT NULL," +
-            "room varchar(255) NOT NULL," +
-            "FOREIGN KEY(CPF) REFERENCES patient(CPF)," +
-            "FOREIGN KEY(CRM) REFERENCES doctor(CRM))";
+        String sql = "CREATE TABLE IF NOT EXISTS checks(" +
+                "id integer PRIMARY KEY AUTOINCREMENT," +
+                "CPF char(14) NOT NULL," +
+                "CRM char(8) NOT NULL," +
+                "date datetime NOT NULL," +
+                "room varchar(255) NOT NULL," +
+                "FOREIGN KEY(CPF) REFERENCES patient(CPF)," +
+                "FOREIGN KEY(CRM) REFERENCES doctor(CRM))";
 
         try (PreparedStatement stmt = Connections.createStatement(sql)) {
             stmt.executeUpdate();
@@ -37,6 +36,7 @@ public class CheckDAO {
         String sql = "INSERT INTO checks(CPF, CRM, date, room) values(?, ?, ?, ?)";
 
         try (PreparedStatement stmt = Connections.createStatement(sql)) {
+            System.out.println("here");
             stmt.setString(1, check.getPatient().getCPF());
             stmt.setString(2, check.getDoctor().getCRM());
             stmt.setDate(3, check.getDate());
@@ -192,4 +192,3 @@ public class CheckDAO {
         return checks;
     }
 }
-    

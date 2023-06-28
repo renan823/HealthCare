@@ -74,6 +74,7 @@ public class CheckServlet extends HttpServlet {
 
         if (dateText != null) {
             LocalDateTime datetime = LocalDateTime.parse(dateText);
+            System.out.println(datetime);
             date = Date.valueOf(datetime.toLocalDate());
             System.out.println(date);
         }
@@ -93,6 +94,7 @@ public class CheckServlet extends HttpServlet {
             Doctor doctor = doctorDAO.get(CRM);
 
             if ((patient != null) && (doctor != null)) {
+                System.out.println(date);
                 Check check = new Check(patient, doctor, null, room);
                 Check existsCRM = checkDAO.getCRM(CRM, date);
                 Check existsCPF = checkDAO.getCPF(CPF, date);

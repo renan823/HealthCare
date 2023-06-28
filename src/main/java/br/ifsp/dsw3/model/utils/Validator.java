@@ -17,8 +17,8 @@ public class Validator {
             return false;
         }
         System.out.println("text");
-        System.out.println(text.matches("[A-Z][a-z]{3,}"));
-        return text.matches("[A-Z][a-z]{3,}");
+        System.out.println(text.matches(".{3,}"));
+        return text.matches(".{3,}");
     }
 
     public static boolean cpf(String CPF) {
