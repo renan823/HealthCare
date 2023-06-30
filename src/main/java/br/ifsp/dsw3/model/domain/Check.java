@@ -5,11 +5,16 @@ import java.sql.Date;
 public class Check {
     private Patient patient;
     private Doctor doctor;
-    private Date date;
+    private String date;
     private String room;
     private int id;
 
-    public Check(Patient patient, Doctor doctor, Date date, String room, int id) {
+    public Check(String date, String room) {
+        this.date = date;
+        this.room = room;
+    }
+
+    public Check(Patient patient, Doctor doctor, String date, String room, int id) {
         this.patient = patient;
         this.doctor = doctor;
         this.date = date;
@@ -17,10 +22,10 @@ public class Check {
         this.id = id;
     }
 
-    public Check(Patient patient, Doctor doctor, Date date, String room) {
+    public Check(Patient patient, Doctor doctor, String datetime, String room) {
         this.patient = patient;
         this.doctor = doctor;
-        this.date = date;
+        this.date = datetime;
         this.room = room;
     }
 
@@ -36,10 +41,10 @@ public class Check {
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
     public String getRoom() {

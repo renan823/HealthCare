@@ -26,13 +26,13 @@
         <h1 class="title m-4 has-text-centered has-text-link">Agendar consultas</h1>
         <div class="columns m-6">
             <div class="column mx-4">
-                <form action="../../checks" class="box" method="post">
+                <form action="../checks" class="box" method="post">
                     <p class="subtitle has-text-centered has-text-primary has-text-weight-bold">Preencha os dados da consulta</p>
                     <div class="field">
                     <label class="label">ID da consulta</label>
                     <div class="controls">
                         <div class="select">
-                            <select name="id" id="id">
+                            <select name="id">
                                 <%
                                     for(Check c: checks) {
                                 %>
@@ -45,10 +45,16 @@
                     </div>
                     <hr class="hr"/>
                     <p class="subtitle has-text-4 has-text-weight-bold has-text-primary">Dados da consulta</p>
-                    <div class="field">
+                     <div class="field">
                         <label class="label">Data</label>
                         <div class="controls">
-                            <input type="datetime-local" class="input" name="date"/>
+                            <input type="date" class="input" name="date"/>
+                        </div>
+                    </div>
+                   <div class="field">
+                        <label class="label">Hora</label>
+                        <div class="controls">
+                            <input type="time" class="input" name="time"/>
                         </div>
                     </div>
                     <div class="field">

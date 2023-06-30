@@ -69,61 +69,58 @@ public class CheckServlet extends HttpServlet {
         String CPF = req.getParameter("CPF");
         String room = req.getParameter("room");
         String action = req.getParameter("action");
-        String dateText = req.getParameter("date");
-        Date date = null;
-
-        if (dateText != null) {
-            LocalDateTime datetime = LocalDateTime.parse(dateText);
-            System.out.println(datetime);
-            date = Date.valueOf(datetime.toLocalDate());
-            System.out.println(date);
-        }
+        String date = req.getParameter("date");
+        String time = req.getParameter("time");
+        String datetime = (date + ' ' + time);
+        String getId = req.getParameter("id");
 
         //Message to frontend
         String message = "";
         String type = "error";
 
-        //Validate data
-        if ((Validator.cpf(CPF)) && (Validator.crm(CRM)) && (Validator.text(room)) && (date != null)) {
-            
-            
-            //Patient creation
-            Patient patient = patientDAO.get(CPF);
+        if (action.contains("create")) {
+            if ((Validator.cpf(CPF)) && (Validator.crm(CRM)) && (Validator.text(room)) && (datetime != null)) {
+                System.out.println(datetime);
+                Patient patient = patientDAO.get(CPF);
+                Doctor doctor = doctorDAO.get(CRM);
 
-            //Doctor creation
-            Doctor doctor = doctorDAO.get(CRM);
+                Check check = new Check(patient, doctor, datetime, room);
+                Check existsCRM = checkDAO.getCRM(CRM, datetime);
+                Check existsCPF = checkDAO.getCPF(CPF, datetime);
 
-            if ((patient != null) && (doctor != null)) {
-                System.out.println(date);
-                Check check = new Check(patient, doctor, null, room);
-                Check existsCRM = checkDAO.getCRM(CRM, date);
-                Check existsCPF = checkDAO.getCPF(CPF, date);
+                System.out.println(existsCRM);
+                System.out.println(existsCPF);
 
                 if ((existsCPF == null) && (existsCRM == null)) {
-                    if (action.contains("create")) {
-                        checkDAO.create(check);
-                        message = "Consulta adicionada!";
-                        type = "success";
-                    } else {
-                        int ID = Integer.parseInt(req.getParameter("id"));
-                        Check exists = checkDAO.get(ID);
-
-                        if (exists != null) {
-                            checkDAO.update(check, ID);
-                            message = "Consulta atualizada!";
-                            type = "success";
-                        } else {
-                            message = "Esta consulta não existe!";
-                        }
-                    }
+                     checkDAO.create(check);
+                     message = "Consulta agendada!";
+                     type = "success";
                 } else {
-                    message = "Esta data já está em uso por este médico/paciente";
-                }
+                    message = "Este médico/paciente já está ocupado nesta data!";
+                } 
             } else {
-                message = "Este médico/paciente não existe!";
+                message = "Preencha corretamente os dados!";
             }
         } else {
-            message = "Preencha corretamente campos!";
+            if (getId != null) {
+                int ID = Integer.parseInt(getId);
+                if ((Validator.text(room)) && (datetime != null)) {
+                    Check exists = checkDAO.get(ID);
+
+                    if (exists != null) {
+                        Check check = new Check(datetime, room);
+                        checkDAO.update(check, ID);
+                        message = "Consulta atualizada!";
+                        type = "success";
+                    } else {
+                        message = "Esta consulta não existe!";
+                    }
+                } else {
+                    message = "Preencha corretamente os dados!";
+                }
+            } else {
+                message = "Selecione uma consulta válida!";
+            }
         }
 
         req.getSession().setAttribute("message", message);

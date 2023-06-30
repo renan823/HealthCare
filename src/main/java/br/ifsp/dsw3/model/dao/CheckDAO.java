@@ -39,7 +39,7 @@ public class CheckDAO {
             System.out.println("here");
             stmt.setString(1, check.getPatient().getCPF());
             stmt.setString(2, check.getDoctor().getCRM());
-            stmt.setDate(3, check.getDate());
+            stmt.setString(3, check.getDate());
             stmt.setString(4, check.getRoom());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -48,11 +48,11 @@ public class CheckDAO {
     }
 
     public void update(Check check, int id) {
-        String sql = "UPDATE check SET room=?, date=? WHERE id=?";
+        String sql = "UPDATE checks SET room=?, date=? WHERE id=?";
 
         try (PreparedStatement stmt = Connections.createStatement(sql)) {
             stmt.setString(1, check.getRoom());
-            stmt.setDate(2, check.getDate());
+            stmt.setString(2, check.getDate());
             stmt.setInt(3, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -94,7 +94,7 @@ public class CheckDAO {
     }
 
     public Check get(int id) {
-        String sql = "SELECT * FROM cheks WHERE id=?";
+        String sql = "SELECT * FROM checks WHERE id=?";
         Check check = null;
 
         try (PreparedStatement stmt = Connections.createStatement(sql)) {
@@ -105,7 +105,7 @@ public class CheckDAO {
                 String CPF = rs.getString("CPF");
                 String CRM = rs.getString("CRM");
                 String room = rs.getString("room");
-                Date date = rs.getDate("date");
+                String date = rs.getString("date");
 
                 Doctor doctor = doctorDAO.get(CRM);
                 Patient patient = patientDAO.get(CPF);
@@ -118,13 +118,13 @@ public class CheckDAO {
         return check;
     }
 
-    public Check getCRM(String CRM, Date date) {
+    public Check getCRM(String CRM, String datetime) {
         String sql = "SELECT * FROM checks WHERE CRM=? and date=?";
         Check check = null;
 
         try (PreparedStatement stmt = Connections.createStatement(sql)) {
             stmt.setString(1, CRM);
-            stmt.setDate(2, date);
+            stmt.setString(2, datetime);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -134,7 +134,7 @@ public class CheckDAO {
                 Doctor doctor = doctorDAO.get(CRM);
                 Patient patient = patientDAO.get(CPF);
 
-                check = new Check(patient, doctor, date, room);
+                check = new Check(patient, doctor, datetime, room);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -142,13 +142,13 @@ public class CheckDAO {
         return check;
     }
 
-    public Check getCPF(String CPF, Date date) {
+    public Check getCPF(String CPF, String datetime) {
         String sql = "SELECT * FROM checks WHERE CPF=? and date=?";
         Check check = null;
 
         try (PreparedStatement stmt = Connections.createStatement(sql)) {
             stmt.setString(1, CPF);
-            stmt.setDate(2, date);
+            stmt.setString(2, datetime);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -158,7 +158,7 @@ public class CheckDAO {
                 Doctor doctor = doctorDAO.get(CRM);
                 Patient patient = patientDAO.get(CPF);
 
-                check = new Check(patient, doctor, date, room);
+                check = new Check(patient, doctor, datetime, room);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -178,7 +178,7 @@ public class CheckDAO {
                 String CRM = rs.getString("CRM");
                 String room = rs.getString("room");
                 int id = rs.getInt("id");
-                Date date = rs.getDate("date");
+                String date = rs.getString("date");
 
                 Doctor doctor = doctorDAO.get(CRM);
                 Patient patient = patientDAO.get(CPF);

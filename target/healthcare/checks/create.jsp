@@ -68,7 +68,13 @@
                     <div class="field">
                         <label class="label">Data</label>
                         <div class="controls">
-                            <input type="datetime-local" class="input" name="date"/>
+                            <input type="date" class="input" name="date"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Hora</label>
+                        <div class="controls">
+                            <input type="time" class="input" name="time"/>
                         </div>
                     </div>
                     <div class="field">
